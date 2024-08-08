@@ -33,7 +33,7 @@ class Trip(models.Model):
     location_from = models.IntegerField()
     location_to = models.IntegerField()
     leave_time = models.TimeField()
-    arrival_time = models.TimeField()
+    arrival_time = models.TimeField(default=0)
     bus = models.IntegerField()
     amount = models.IntegerField(default=0)
     trip_date = models.DateTimeField(default=datetime.now, blank=True)
