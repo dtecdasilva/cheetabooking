@@ -1,0 +1,43 @@
+
+
+from django.db import migrations
+from django.db import migrations, models
+import datetime
+
+
+def convert_arrival_time(apps, schema_editor):
+    trip = apps.get_model('booking', 'Trip')
+    for row in trip.objects.all():
+        if row.arrival_time is not None:
+            # Assuming integer represents time in HHMM format
+            hour = row.arrival_time // 100
+            minute = row.arrival_time % 100
+            # Ensure the time is valid before saving
+            if 0 <= hour < 24 and 0 <= minute < 60:
+                row.arrival_time_temp = datetime.time(hour=hour, minute=minute)
+                row.save()
+
+
+class Migration(migrations.Migration):
+
+    dependencies = [
+        ('booking', '0013_alter_trip_arrival_time_alter_trip_leave_time'),
+    ]
+
+    operations = [
+        migrations.AddField(
+            model_name='trip',
+            name='arrival_time_temp',
+            field=models.TimeField(null=True),
+        ),
+        migrations.RunPython(convert_arrival_time),
+        migrations.RemoveField(
+            model_name='trip',
+            name='arrival_time',
+        ),
+        migrations.RenameField(
+            model_name='trip',
+            old_name='arrival_time_temp',
+            new_name='arrival_time',
+        ),
+    ]
