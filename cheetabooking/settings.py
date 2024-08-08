@@ -53,6 +53,7 @@ MIDDLEWARE = [
     'whitenoise.middleware.WhiteNoiseMiddleware',
 ]
 
+
 ROOT_URLCONF = 'cheetabooking.urls'
 
 TEMPLATES = [
@@ -80,6 +81,14 @@ WSGI_APPLICATION = 'cheetabooking.wsgi.application'
 DATABASES = {
     'default': dj_database_url.config(conn_max_age=600, ssl_require=True)
 }
+
+# Ensure the ENGINE is set if it's not already provided
+if not DATABASES['default'].get('ENGINE'):
+    DATABASES['default']['ENGINE'] = 'django.db.backends.postgresql'
+
+# Ensure the NAME is set if it's not already provided
+if 'NAME' not in DATABASES['default']:
+    DATABASES['default']['NAME'] = 'default_db'
 
 
 # Password validation
@@ -118,6 +127,7 @@ USE_TZ = True
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATIC_URL = '/static/'
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
