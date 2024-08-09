@@ -1,1 +1,1 @@
-web: gunicorn booking.wsgi --log-file -
+web: gunicorn cheetabooking.wsgi --log-file -
