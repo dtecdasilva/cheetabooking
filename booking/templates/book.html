@@ -1059,17 +1059,17 @@
 
 <div class="border-bottom pb-3">
     {% if error == 'success' %}
-        <div class="alert alert-success" role="alert">
+        <div class="alert alert-success" role="alert" style="margin:20px 100px">
             Successfully Booked
         </div>
 
         {% if unique_code %}
-            <a class="btn btn-success text-white" href="{% url 'download_receipt' unique_code=unique_code %}"><i aria-hidden="true"
+            <a style="margin:20px 100px" class="btn btn-success text-white" href="{% url 'download_receipt' unique_code=unique_code %}"><i aria-hidden="true"
 																	class="mdi mdi-bookmark-multiple"></i> Download your receipt</a>
         {% endif %}
     {% endif %}
 	<div class="row justify-content-md-start align-items-md-center">
-	  <div class="col-lg-4 col-md-4 col-sm-12 mb-3 mb-md-0" style="padding-left: 200px">
+	  <div class="col-lg-4 col-md-4 col-sm-12 mb-3 mb-md-0" style="padding-left: 150px">
 		<h5 class="mb-0"><span class="text-dark fw-semibold"></span>{{ trips_count }} Trips Found!</h5>
 	  </div>
 	  <!-- End Col -->
