@@ -389,7 +389,6 @@ def addTrip(request):
         trip_date = request.POST['trip_date']
         agency = request.POST['agency']
 
-
         tripadd = Trip(location_from=location_from, location_to=location_to, leave_time=leave_time, arrival_time=arrival_time, bus=bus, amount=amount, agency=agency, trip_date=trip_date)
         tripadd.save()
 
