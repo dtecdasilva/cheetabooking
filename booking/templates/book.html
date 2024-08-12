@@ -1076,7 +1076,7 @@
 
 	  <div class="col-md-12 text-md-end">
 		<div class="row gx-2">
-		   <div class="col-4">
+		   <div class="col-auto">
             <!-- Select -->
             <select class="form-select form-select-sm">
                 <option value="sort1">Highest rated</option>
@@ -1088,7 +1088,7 @@
         </div>
 		  <!-- End Col -->
 
-		  <div class="col-4">
+		  <div class="col-auto">
             <!-- Select -->
             <select class="form-select form-select-sm">
                 <option value="price1" selected>VIP</option>
@@ -1098,7 +1098,7 @@
         </div>
 		  <!-- End Col -->
 
-		  <div class="col-4">
+		  <div class="col-auto">
             <!-- Select -->
             <select class="form-select form-select-sm">
                 <option value="duration1" selected>One Way</option>
@@ -1139,7 +1139,7 @@
 												<div class="elementor-icon-box-wrapper">
                                                     <div class="elementor-column elementor-col-50 pull-left">
                                                         <div class="elementor-field elementor-select-wrapper">
-                                                        <div style="width:342px;height: 180px;">
+                                                        <div style="width:340px;height: 180px;">
                                                             {% for bus in buses %}
                                                                 {% if bus.id == trip.bus %}
                                                                     <img src="{{bus.picture}}" class="card-img" alt="..." style="width: 100%;height: 100%;display: table-cell">
