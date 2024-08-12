@@ -1074,46 +1074,42 @@
 	  </div>
 	  <!-- End Col -->
 
-	  <div class="col-md-8 text-md-end">
-		<div class="row gx-2">
-		  <div class="col-auto mb-2">
-			<!-- Select -->
-			<select class="form-select form-select-sm p-2 mr-4">
-			  <option value="sort1">Highest rated</option>
-			  <option value="sort2">Newest</option>
-			  <option value="sort3">Lowest price</option>
-			  <option value="sort4">Highest price</option>
-			</select>
-			<!-- End Select -->
-		  </div>
-		  <!-- End Col -->
+	  <<div class="col-md-8 text-md-end">
+    <div class="row gx-1 justify-content-end">
+        <div class="col-auto">
+            <!-- Select -->
+            <select class="form-select form-select-sm">
+                <option value="sort1">Highest rated</option>
+                <option value="sort2">Newest</option>
+                <option value="sort3">Lowest price</option>
+                <option value="sort4">Highest price</option>
+            </select>
+            <!-- End Select -->
+        </div>
+        <!-- End Col -->
 
-		  <div class="col-auto mb-2">
-			<!-- Select -->
-			<select class="form-select form-select-sm p-2 mr-4">
-			  <option value="price1" selected>VIP</option>
-			  <option value="price2">Classic</option>
-			</select>
-			<!-- End Select -->
-		  </div>
-		  <!-- End Col -->
+        <div class="col-auto">
+            <!-- Select -->
+            <select class="form-select form-select-sm">
+                <option value="price1" selected>VIP</option>
+                <option value="price2">Classic</option>
+            </select>
+            <!-- End Select -->
+        </div>
+        <!-- End Col -->
 
-		  <div class="col-auto mb-2">
-			<!-- Select -->
-			<select class="form-select form-select-sm p-2 mr-4">
-			  <option value="duration1" selected>One Way</option>
-			  <option value="duration2">Round Trip</option>
-			</select>
-			<!-- End Select -->
-		  </div>
-		  <!-- End Col -->
-		  <!-- End Col -->
-		</div>
-		<!-- End Row -->
-	  </div>
-	  <!-- End Col -->
-	</div>
-	<!-- End Row -->
+        <div class="col-auto">
+            <!-- Select -->
+            <select class="form-select form-select-sm">
+                <option value="duration1" selected>One Way</option>
+                <option value="duration2">Round Trip</option>
+            </select>
+            <!-- End Select -->
+        </div>
+        <!-- End Col -->
+    </div>
+    <!-- End Row -->
+</div>
   </div>
   <!-- End Filter -->
 
@@ -1135,11 +1131,11 @@
 											data-widget_type="icon-box.default">
 
                                             {% for trip in trips %}
-											<div class="elementor-widget-container">
+											<div class="elementor-widget-container" style="padding:20px;">
 												<div class="elementor-icon-box-wrapper">
                                                     <div class="elementor-column elementor-col-50 pull-left">
                                                         <div class="elementor-field elementor-select-wrapper">
-                                                        <div style="width:350px;height: 180px;">
+                                                        <div style="width:345px;height: 180px;">
                                                             {% for bus in buses %}
                                                                 {% if bus.id == trip.bus %}
                                                                     <img src="{{bus.picture}}" class="card-img" alt="..." style="width: 100%;height: 100%;display: table-cell">
@@ -1150,7 +1146,7 @@
                                                     </div>
                                                     <div class="elementor-column elementor-col-50" style="">
                                                         <div class="" style="width: 100%;">
-                                                            <p style="background-color: black;color: white;padding: 10px;">
+                                                            <p style="background-color: black;color: white;padding: 10px;width:100%;">
                                                                 {% for agency in agencies %}
                                                                     {% if agency.id == trip.agency %}
                                                                         <img src="{{agency.logo}}" alt="..." style="width: 30px;background-color: white; float:left">
