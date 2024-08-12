@@ -1059,12 +1059,12 @@
 
 <div class="border-bottom pb-3">
     {% if error == 'success' %}
-        <div class="alert alert-success" role="alert" style="margin:25px 100px">
+        <div class="alert alert-success" role="alert" style="margin:30px 100px 5px 100px">
             Successfully Booked
         </div>
 
         {% if unique_code %}
-            <a style="margin:20px 100px" class="btn btn-success text-white" href="{% url 'download_receipt' unique_code=unique_code %}"><i aria-hidden="true"
+            <a style="margin:5px 100px 5px 100px" class="btn btn-success text-white" href="{% url 'download_receipt' unique_code=unique_code %}"><i aria-hidden="true"
 																	class="mdi mdi-bookmark-multiple"></i> Download your receipt</a>
         {% endif %}
     {% endif %}
