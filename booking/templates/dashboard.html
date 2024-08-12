@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    {% load static %}
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Agency Dashboard</title>
@@ -42,10 +43,10 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ml-auto">
-                <li class="nav-item">
+                <li class="nav-item active">
                     <a class="nav-link" href="dashboard">Home</a>
                 </li>
-                <li class="nav-item active">
+                <li class="nav-item">
                     <a class="nav-link" href="trip">Trips</a>
                 </li>
                 <li class="nav-item ">
@@ -87,7 +88,7 @@
                         </div>
                         <!-- QR code scanner placeholder -->
                         <div class="scanner-container">
-                            <a href="scan_qr_code"><span class="text-dark text-center">QR Code Scanner</span></a>
+                            <a href="scan_qr_code" style="text-align: center"><span class="text-dark text-center">QR Code Scanner</span></a>
                         </div>
                     </div>
                 </div>
