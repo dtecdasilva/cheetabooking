@@ -60,26 +60,35 @@ def search_trips(request):
         location2 = request.POST['location2']
         intlocation1 = int('0' + location1)
         intlocation2 = int('0' + location2)
-        time_str = request.POST['time']
-        the_date = request.POST['date']
-        specified_time = datetime.strptime(time_str, '%H:%M').time()
+        the_date = request.POST.get('date')
+        time_str = request.POST.get('time', None)  # Time is optional
+
+        # Parse the input date
         input_date = datetime.strptime(the_date, '%Y-%m-%d').date()
 
-        # Filter trips based on the input date and time
-        if input_date == date.today():
-            # If the date is today, filter trips with a time greater than the specified time
+        # Filter trips based on the input
+        if input_date == date.today() and time_str:
+            # If the date is today and time is provided, filter by both date and time
+            specified_time = datetime.strptime(time_str, '%H:%M').time()
             trips = Trip.objects.filter(
                 Q(location_from=intlocation1) &
                 Q(location_to=intlocation2) &
                 Q(leave_time__gt=specified_time) &
                 Q(trip_date=input_date)
             )
-        elif input_date > date.today():
-            # If the date is in the future, filter trips based on the date only
+        elif input_date >= date.today() and time_str is None:
+            # If no time is provided, filter by date only (future dates including today)
             trips = Trip.objects.filter(
                 Q(location_from=intlocation1) &
                 Q(location_to=intlocation2) &
                 Q(trip_date__gte=input_date)
+            )
+        elif input_date > date.today() and time_str:
+            # If the date is in the future and time is provided, filter by date only (time doesn't matter for future dates)
+            trips = Trip.objects.filter(
+                Q(location_from=intlocation1) &
+                Q(location_to=intlocation2) &
+                Q(trip_date=input_date)
             )
 
         trips_list = list(trips.values())
