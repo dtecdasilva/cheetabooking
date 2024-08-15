@@ -61,15 +61,26 @@ def search_trips(request):
         intlocation1 = int('0' + location1)
         intlocation2 = int('0' + location2)
         time_str = request.POST['time']
+        the_date = request.POST['date']
         specified_time = datetime.strptime(time_str, '%H:%M').time()
+        input_date = datetime.strptime(the_date, '%Y-%m-%d').date()
 
-        # Filter trips that leave after the specified time on the same day
-        trips = Trip.objects.filter(
-            Q(location_from=intlocation1) &
-            Q(location_to=intlocation2) &
-            Q(leave_time__gt=specified_time) &
-            Q(trip_date=date.today())
-        )
+        # Filter trips based on the input date and time
+        if input_date == date.today():
+            # If the date is today, filter trips with a time greater than the specified time
+            trips = Trip.objects.filter(
+                Q(location_from=intlocation1) &
+                Q(location_to=intlocation2) &
+                Q(leave_time__gt=specified_time) &
+                Q(trip_date=input_date)
+            )
+        elif input_date > date.today():
+            # If the date is in the future, filter trips based on the date only
+            trips = Trip.objects.filter(
+                Q(location_from=intlocation1) &
+                Q(location_to=intlocation2) &
+                Q(trip_date__gte=input_date)
+            )
 
         trips_list = list(trips.values())
 
