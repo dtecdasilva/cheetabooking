@@ -55,6 +55,7 @@ def register_agency(request):
         # Create the Agency object and save it to the database
         x = Agency(name=name, location=location, country_location=country_location_id, logo=logo_path, description=description, user=user.id)
         x.save()
+        login(request, user)
         return redirect('/dashboard')
     return render(request, 'index.html')
 
