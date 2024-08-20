@@ -21,7 +21,7 @@ from reportlab.lib.units import inch
 from reportlab.pdfgen import canvas
 from reportlab.lib import colors
 from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
-from reportlab.platypus import Paragraph, SimpleDocTemplate, Table, TableStyle, Image
+from reportlab.platypus import Paragraph, SimpleDocTemplate, Table, TableStyle, Image, Spacer
 import qrcode
 from django.core.mail import EmailMessage
 from django.views.decorators.csrf import csrf_exempt
