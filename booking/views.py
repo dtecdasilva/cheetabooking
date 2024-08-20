@@ -47,7 +47,7 @@ def register_agency(request):
         logo_path = ''
         if logo_file:
             # Define the path to save the file
-            logo_path = os.path.join('logos', logo_file.name)
+            logo_path = os.path.join('media', logo_file.name)
             with open(logo_path, 'wb+') as destination:
                 for chunk in logo_file.chunks():
                     destination.write(chunk)
