@@ -32,6 +32,33 @@ def scan_qr_code_view(request):
     return render(request, 'scan.html')
 
 
+def register_agency(request):
+    if request.method == 'POST':
+        name = request.POST.get('name')
+        location = request.POST.get('location')
+        country_location_id = request.POST.get('country_location')
+        description = request.POST.get('description')
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+
+        user = User.objects.create_user(username=username, password=password)
+
+        logo_file = request.FILES.get('logo')
+        logo_path = ''
+        if logo_file:
+            # Define the path to save the file
+            logo_path = os.path.join('logos', logo_file.name)
+            with open(logo_path, 'wb+') as destination:
+                for chunk in logo_file.chunks():
+                    destination.write(chunk)
+
+        # Create the Agency object and save it to the database
+        x = Agency(name=name, location=location, country_location=country_location_id, logo=logo_path, description=description, user=user.id)
+        x.save()
+        return redirect('/dashboard')
+    return render(request, 'index.html')
+
+
 @csrf_exempt
 def process_qr_code_view(request):
     if request.method == 'POST':
