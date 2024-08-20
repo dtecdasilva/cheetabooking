@@ -21,7 +21,7 @@ from reportlab.lib.units import inch
 from reportlab.pdfgen import canvas
 from reportlab.lib import colors
 from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
-from reportlab.platypus import Paragraph, SimpleDocTemplate, Table, TableStyle, Image
+from reportlab.platypus import Paragraph, SimpleDocTemplate, Table, TableStyle, Image, Spacer
 import qrcode
 from django.core.mail import EmailMessage
 from django.views.decorators.csrf import csrf_exempt
@@ -253,90 +253,84 @@ def book(request):
 
 
 def generate_pdf(leave_time, name, idcn, unique_code, seat, date_time, location_from, location_to, agency_name, agency_location, bus_number, bus_type, amount, agency_logo):
+    # Convert date_time to datetime object if it's a string
+    if isinstance(date_time, str):
+        date_time = datetime.strptime(date_time, '%Y-%m-%d %H:%M:%S')
+
     buffer = BytesIO()
     doc = SimpleDocTemplate(buffer, pagesize=landscape(letter))
 
     styles = getSampleStyleSheet()
-    styles.add(ParagraphStyle(name='Center', alignment=1, textColor=colors.white))
+    styles.add(ParagraphStyle(name='Center', alignment=1, textColor=colors.black, fontSize=14, fontName='Helvetica-Bold'))
 
-    # Header
-    elements = []
-    header_data = [
-        [Paragraph("<b>Cheeta Booking Receipt</b>", styles['Center'])]
-    ]
-    header_table = Table(header_data, colWidths=[8 * inch])
-    header_table.setStyle(TableStyle([
-        ('BACKGROUND', (0, 0), (-1, -1), colors.indigo),
-        ('TEXTCOLOR', (0, 0), (-1, 0), colors.white),
-        ('ALIGN', (0, 0), (-1, -1), 'CENTER'),
-        ('FONTSIZE', (0, 0), (-1, -1), 20),
-        ('BOTTOMPADDING', (0, 0), (-1, -1), 12),
-    ]))
-    elements.append(header_table)
-    elements.append(Paragraph("<br/><br/>", styles['Normal']))
-
-    # QR Code
+    # QR Code Generation
     qr_data = f"Name: {name}\nID Card Number: {idcn}\nBooking Code: {unique_code}\nSeat: {seat}\nDate and Time: {date_time}\nFrom: {location_from}\nTo: {location_to}\nAgency: {agency_name}\nBus Number: {bus_number}\nType: {bus_type}\nAmount: {amount}"
     qr = qrcode.make(qr_data)
     qr_buffer = BytesIO()
     qr.save(qr_buffer, format='PNG')
     qr_buffer.seek(0)
     qr_image = Image(qr_buffer)
-    qr_image.drawHeight = 2 * inch
-    qr_image.drawWidth = 2 * inch
+    qr_image.drawHeight = 1.5 * inch
+    qr_image.drawWidth = 1.5 * inch
 
-    date_only = date_time.date()
+    # Header (Title of the Receipt)
+    elements = []
+    title_data = [
+        [Paragraph("Bus Ticket", styles['Center'])],
+    ]
+    title_table = Table(title_data, colWidths=[8.5 * inch])
+    title_table.setStyle(TableStyle([
+        ('BACKGROUND', (0, 0), (-1, -1), colors.lightblue),
+        ('TEXTCOLOR', (0, 0), (-1, 0), colors.white),
+        ('ALIGN', (0, 0), (-1, -1), 'CENTER'),
+        ('FONTSIZE', (0, 0), (-1, -1), 24),
+        ('BOTTOMPADDING', (0, 0), (-1, -1), 12),
+    ]))
+    elements.append(title_table)
+    elements.append(Spacer(1, 12))
 
-    # Load the Agency Logo
+    # Agency Logo
+    logo_image = None
     if agency_logo:
         logo_image = Image(agency_logo)
-        logo_image.drawHeight = 0.5 * inch
-        logo_image.drawWidth = 0.5 * inch
-    else:
-        logo_image = None
+        logo_image.drawHeight = 0.75 * inch
+        logo_image.drawWidth = 0.75 * inch
 
-    # Content with Agency Logo and Name
-    agency_name_with_logo = [[logo_image, Paragraph(agency_name, styles['Normal'])]] if logo_image else [[Paragraph(agency_name, styles['Normal'])]]
-
-    content_data = [
-        [agency_name_with_logo],
-        ["Agency Location:", agency_location],
-        ["Customer Name:", name],
-        ["Booking Code:", unique_code],
-        ["ID Card Number:", idcn],
-        ["Seat:", seat],
-        ["From:", location_from],
-        ["To:", location_to],
-        ["Date:", date_only],
-        ["Time:", leave_time],
-        ["Bus Number:", bus_number],
-        ["Type:", bus_type],
-        ["Amount Paid:", amount]
+    # Agency Info
+    agency_info_data = [
+        [logo_image, Paragraph(agency_name, styles['Normal']), Paragraph(agency_location, styles['Normal'])]
     ]
-    content_table = Table(content_data, colWidths=[2 * inch, 4 * inch])
+    agency_info_table = Table(agency_info_data, colWidths=[0.75 * inch, 4 * inch, 3.75 * inch])
+    agency_info_table.setStyle(TableStyle([
+        ('ALIGN', (0, 0), (-1, -1), 'LEFT'),
+        ('VALIGN', (0, 0), (-1, -1), 'MIDDLE'),
+        ('SPAN', (1, 0), (2, 0)),
+    ]))
+    elements.append(agency_info_table)
+    elements.append(Spacer(1, 12))
+
+    # Content
+    content_data = [
+        ["Date:", date_time.strftime("%d.%m.%Y"), "Time:", leave_time],
+        ["From:", location_from, "To:", location_to],
+        ["Seat:", seat, "SNO:", unique_code],
+        ["Customer Name:", name, "ID Card Number:", idcn],
+        ["Bus Number:", bus_number, "Bus Type:", bus_type],
+        ["Amount Paid:", amount, ""],
+        [qr_image]
+    ]
+    content_table = Table(content_data, colWidths=[1.5 * inch, 2.5 * inch, 1.5 * inch, 2.5 * inch])
     content_table.setStyle(TableStyle([
-        ('BACKGROUND', (0, 0), (0, -1), colors.lightgrey),
+        ('BACKGROUND', (0, 0), (-1, -1), colors.lightblue),
         ('TEXTCOLOR', (0, 0), (-1, -1), colors.black),
         ('ALIGN', (0, 0), (-1, -1), 'LEFT'),
         ('FONTNAME', (0, 0), (-1, -1), 'Helvetica'),
         ('FONTSIZE', (0, 0), (-1, -1), 12),
         ('BOTTOMPADDING', (0, 0), (-1, -1), 6),
-        ('BACKGROUND', (0, 0), (-1, 0), colors.purple),
-        ('SPAN', (0, 0), (-1, 0)),
-        ('TEXTCOLOR', (0, 0), (-1, 0), colors.white)
+        ('BACKGROUND', (0, 0), (-1, 0), colors.lightblue),
+        ('GRID', (0, 0), (-1, -1), 0.5, colors.white)
     ]))
-
-    # Layout: Content Table on the Left, QR Code on the Right
-    combined_data = [
-        [content_table, qr_image]
-    ]
-    combined_table = Table(combined_data, colWidths=[6 * inch, 2 * inch])
-    combined_table.setStyle(TableStyle([
-        ('VALIGN', (0, 0), (0, 0), 'TOP'),
-        ('VALIGN', (1, 0), (1, 0), 'BOTTOM'),
-        ('ALIGN', (1, 0), (1, 0), 'RIGHT'),
-    ]))
-    elements.append(combined_table)
+    elements.append(content_table)
 
     # Build PDF
     doc.build(elements)
@@ -352,7 +346,7 @@ def generate_pdf(leave_time, name, idcn, unique_code, seat, date_time, location_
         f.write(buffer.getvalue())
 
     buffer.close()
-    return file_path  # Return the file path instead of the file name
+    return file_path
 
 
 def send_booking_email(agency_logo, leave_time, name, idcn, unique_code, seat, date_time, location_from, location_to, agency_name, agency_location, bus_number, bus_type, amount, recipient_email):
