@@ -1261,7 +1261,7 @@
 										  <span aria-hidden="true">&times;</span>
 										</button>
 									  </div>
-									  <div class="modal-body">
+									  <div class="modal-body" style="max-height: 400px; overflow-y: auto;">
 										<form action="{% url 'register_agency' %}" method="post" enctype="multipart/form-data">
                                     		{% csrf_token %}
                                             <div class="form-group">
