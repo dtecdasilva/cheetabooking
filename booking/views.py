@@ -206,10 +206,12 @@ def trip(request):
     agency = Agency.objects.get(user=h)
     location = Location.objects.all()
     buses = Bus.objects.filter(agency=agency.id)
+    trips = Trip.objects.filter(agency=agency.id)
     context = {
         'agency': agency,
         'location': location,
-        'bus': buses
+        'bus': buses,
+        'trip': trips
     }
     return render(request, 'trip.html', context)
 
@@ -250,7 +252,7 @@ def book(request):
     return render(request, 'book.html', context)
 
 
-def generate_pdf(leave_time, name, idcn, unique_code, seat, date_time, location_from, location_to, agency_name, agency_location, bus_number, bus_type, amount):
+def generate_pdf(leave_time, name, idcn, unique_code, seat, date_time, location_from, location_to, agency_name, agency_location, bus_number, bus_type, amount, agency_logo):
     buffer = BytesIO()
     doc = SimpleDocTemplate(buffer, pagesize=landscape(letter))
 
@@ -285,9 +287,19 @@ def generate_pdf(leave_time, name, idcn, unique_code, seat, date_time, location_
 
     date_only = date_time.date()
 
-    # Content
+    # Load the Agency Logo
+    if agency_logo:
+        logo_image = Image(agency_logo)
+        logo_image.drawHeight = 0.5 * inch
+        logo_image.drawWidth = 0.5 * inch
+    else:
+        logo_image = None
+
+    # Content with Agency Logo and Name
+    agency_name_with_logo = [[logo_image, Paragraph(agency_name, styles['Normal'])]] if logo_image else [[Paragraph(agency_name, styles['Normal'])]]
+
     content_data = [
-        [agency_name],
+        [agency_name_with_logo],
         ["Agency Location:", agency_location],
         ["Customer Name:", name],
         ["Booking Code:", unique_code],
@@ -343,7 +355,7 @@ def generate_pdf(leave_time, name, idcn, unique_code, seat, date_time, location_
     return file_path  # Return the file path instead of the file name
 
 
-def send_booking_email(leave_time, name, idcn, unique_code, seat, date_time, location_from, location_to, agency_name, agency_location, bus_number, bus_type, amount, recipient_email):
+def send_booking_email(agency_logo, leave_time, name, idcn, unique_code, seat, date_time, location_from, location_to, agency_name, agency_location, bus_number, bus_type, amount, recipient_email):
     pdf_file_path = generate_pdf(leave_time, name, idcn, unique_code, seat, date_time, location_from, location_to, agency_name, agency_location, bus_number, bus_type, amount)
 
     subject = 'Your Booking Receipt from Cheeta Booking'
@@ -396,14 +408,15 @@ def booking(request):
         d = Agency.objects.get(id=a.agency)
         agency_name = d.name
         agency_location = d.location
+        agency_logo = d.logo
         e = Bus.objects.get(id=a.bus)
         bus_number = e.number
         bus_type = e.type
 
-        pdf_file_name = generate_pdf(leave_time, name, idcn, unique_code, seat, date_time, location_from, location_to, agency_name, agency_location, bus_number, bus_type, amount)
+        pdf_file_name = generate_pdf(agency_logo, leave_time, name, idcn, unique_code, seat, date_time, location_from, location_to, agency_name, agency_location, bus_number, bus_type, amount)
         pdf_url = f'{settings.MEDIA_URL}{pdf_file_name}'
 
-        send_booking_email(leave_time, name, idcn, unique_code, seat, date_time, location_from, location_to, agency_name,agency_location, bus_number, bus_type, amount, email)
+        send_booking_email(agency_logo, leave_time, name, idcn, unique_code, seat, date_time, location_from, location_to, agency_name,agency_location, bus_number, bus_type, amount, email)
 
         url = '/book'
         params = urlencode({'download': pdf_url})
