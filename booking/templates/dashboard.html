@@ -116,20 +116,33 @@
                     </thead>
                     <tbody>
                         {% for book in books %}
-                            {% for trip in trips %}
-                                {% if trip.id == book.trip %}
-                                    <tr>
-                                        <td>{{book.name}}</td>
-                                        <td>{{book.number}}</td>
-                                        <td>{{book.seat}}</td>
-                                        <td>{{book.seat}}</td>
-                                        <td>{{book.idcn}}</td>
-                                        <td>{{book.email}}</td>
-                                        <td>{{book.code}}</td>
-                                        <td>{{book.created_at}}</td>
-                                    </tr>
-                                {% endif %}
-                            {% endfor %}
+                            <tr>
+                                <td>{{book.name}}</td>
+                                <td>{{book.number}}</td>
+                                <td>{{book.seat}}</td>
+                                <td>
+                                    {% for trip in trips %}
+                                        {% if trip.id == book.trip %}
+                                            {{ trip.trip_date }},
+                                            {% for loc in location %}
+                                                {% if loc.id == trip.location_from %}
+                                                    [{{ loc.location }} -
+                                                {% endif %}
+                                            {% endfor %}
+                                            {% for loc in location %}
+                                                {% if loc.id == trip.location_to %}
+                                                    {{ loc.location }}]
+                                                {% endif %}
+                                            {% endfor %}
+                                            {{ trip.leave_time }}
+                                        {% endif %}
+                                    {% endfor %}
+                                </td>
+                                <td>{{book.idcn}}</td>
+                                <td>{{book.email}}</td>
+                                <td>{{book.code}}</td>
+                                <td>{{book.created_at}}</td>
+                            </tr>
                         {% endfor %}
 
                         <!-- Add more rows as needed -->

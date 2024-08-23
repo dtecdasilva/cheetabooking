@@ -165,10 +165,12 @@ def dashboard(request):
         agencys = Agency.objects.get(user=client)
         if agencys:
             trips = Trip.objects.filter(agency=agencys.id)
+            location = Location.objects.all()
             context = {
                 'books': books,
                 'trips': trips,
                 'agencys': agencys,
+                'location' : location
             }
             return render(request, 'dashboard.html', context)
     except Agency.DoesNotExist:
