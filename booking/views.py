@@ -207,8 +207,8 @@ def trip(request):
     h = request.user.id
     agency = Agency.objects.get(user=h)
     location = Location.objects.all()
-    buses = Bus.objects.filter(agency=agency.id)
-    trips = Trip.objects.filter(agency=agency.id)
+    buses = Bus.objects.all()
+    trips = Trip.objects.all()
     context = {
         'agency': agency,
         'location': location,
