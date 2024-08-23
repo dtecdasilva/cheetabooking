@@ -171,14 +171,14 @@
                                         <td>
                                             {% for loc in location %}
                                                 {% if loc.id == trips.location_from %}
-                                                    {{ loc.name }}
+                                                    {{ loc.location }}
                                                 {% endif %}
                                             {% endfor %}
                                         </td>
                                         <td>
                                             {% for loc in location %}
                                                 {% if loc.id == trips.location_to %}
-                                                    {{ loc.name }}
+                                                    {{ loc.location }}
                                                 {% endif %}
                                             {% endfor %}
                                         </td>
