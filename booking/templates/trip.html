@@ -167,18 +167,34 @@
                     <tbody>
                         {% for trips in trip %}
                             {% if trips.agency == agency.id %}
-                                {% for locations in location %}
                                     <tr>
-                                        <td>{{ trips.location_from.name }}</td>
-                                        <td>{{ trips.location_to.name }}</td>
+                                        <td>
+                                            {% for loc in location %}
+                                                {% if loc.id == trips.location_from %}
+                                                    {{ loc.name }}
+                                                {% endif %}
+                                            {% endfor %}
+                                        </td>
+                                        <td>
+                                            {% for loc in location %}
+                                                {% if loc.id == trips.location_to %}
+                                                    {{ loc.name }}
+                                                {% endif %}
+                                            {% endfor %}
+                                        </td>
                                         <td>{{ trips.leave_time }}</td>
                                         <td>{{ trips.arrival_time }}</td>
-                                        <td>{{ trips.bus}}</td>
+                                        <td>
+                                            {% for bus in bus %}
+                                                {% if bus.id == trips.bus %}
+                                                    {{ bus.number }}
+                                                {% endif %}
+                                            {% endfor %}
+                                        </td>
                                         <td>{{ trips.amount }}</td>
                                         <td>{{ trips.trip_date }}</td>
                                         <td>{{ trips.created_at }}</td>
                                     </tr>
-                                {% endfor %}
                             {% endif %}
                         {% endfor %}
                     </tbody>
