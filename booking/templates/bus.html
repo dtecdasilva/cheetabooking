@@ -130,8 +130,7 @@
                     </thead>
                     <tbody>
                         {% for bus in buses %}
-                            {% for agen in agency %}
-                                {% if agen.id == bus.agency%}
+                                {% if agency.id == bus.agency %}
                                     <tr>
                                         <td>{{ bus.number }}</td>
                                         <td>{{ bus.type }}</td>
@@ -140,7 +139,6 @@
                                         <td>{{ bus.created_at }}</td>
                                     </tr>
                                 {% endif %}
-                            {% endfor %}
                         {% endfor %}
                     </tbody>
                 </table>
