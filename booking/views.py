@@ -195,8 +195,10 @@ def about(request):
 def bus(request):
     h = request.user.id
     agency = Agency.objects.get(user=h)
+    buses = Bus.objects.get(agency=agency.id)
     context = {
         'agency': agency,
+        'bus': buses
     }
     return render(request, 'bus.html', context)
 
