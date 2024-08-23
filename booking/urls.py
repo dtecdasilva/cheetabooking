@@ -4,6 +4,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 from .views import scan_qr_code_view, process_qr_code_view
 from .views import download_receipt, register_agency
+from django.contrib.auth import views as auth_views
 
 
 urlpatterns = [
@@ -24,6 +25,7 @@ urlpatterns = [
     path('process_qr_code/', process_qr_code_view, name='process_qr_code'),
     path('download-receipt/<str:unique_code>/', download_receipt, name='download_receipt'),
     path('register/', register_agency, name='register_agency'),
+    path('logout/', auth_views.LogoutView.as_view(), name='logout'),
 ]
 
 if settings.DEBUG:
