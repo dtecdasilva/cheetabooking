@@ -125,7 +125,7 @@
                                     <td>{{book.seat}}</td>
                                     <td>
 
-                                                {{ trip.trip_date }},
+                                                {{ trips.trip_date|date:"Y-m-d" }},
                                                 {% for loc in location %}
                                                     {% if loc.id == trip.location_from %}
                                                         [{{ loc.location }} -

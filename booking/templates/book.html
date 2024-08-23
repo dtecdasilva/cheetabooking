@@ -1261,11 +1261,9 @@
 						background-color: #4CAF50;
 						color: white;
 					}
-					.blocked {
-						background-color: #999; /* Grey color for blocked seat */
-						color: #fff; /* Text color */
-						cursor: not-allowed; /* Show disabled cursor */
-					}
+					.booked{
+                        display:none;
+                    }
 				</style>
 				<h5 style="font-size: small;padding-top: 5px;">
                     {% for bus in buses %}
@@ -1273,6 +1271,7 @@
                            <h5 style="font-size: 17px"><i class="mdi mdi-car"></i> Choose your seat ({{bus.seats}}):</h5>
                         {% endif %}
                     {% endfor %}</h5>
+
                 <form action="{% url 'booking' %}" class="elementor-form" method="post">
                 {% csrf_token %}
                 {% load range_tags %}
@@ -1293,6 +1292,7 @@
                     {% endif %}
                     <br>
                 {% endfor %}
+
 					<script>
 					document.addEventListener('DOMContentLoaded', function() {
 						const bookedSeats = document.querySelectorAll('.booked');
