@@ -198,7 +198,7 @@ def bus(request):
     buses = Bus.objects.get(agency=agency.id)
     context = {
         'agency': agency,
-        'bus': buses
+        'buses': buses
     }
     return render(request, 'bus.html', context)
 
