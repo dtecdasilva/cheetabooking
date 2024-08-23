@@ -167,7 +167,6 @@
                     <tbody>
                         {% for trip in trips %}
                             {% for locations in location %}
-                                {% for buses in bus %}
                                     {% if agency.id == trip.agency %}
                                     {% if trip.location == locations.id %}
                                         {% if trip.bus == bus.id %}
@@ -184,7 +183,6 @@
                                         {% endif %}
                                     {% endif %}
                                     {% endif %}
-                                {% endfor %}
                             {% endfor %}
                         {% endfor %}
                     </tbody>
