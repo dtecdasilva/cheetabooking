@@ -130,13 +130,17 @@
                     </thead>
                     <tbody>
                         {% for bus in buses %}
-                            <tr>
-                                <td>{{ bus.number }}</td>
-                                <td>{{ bus.type }}</td>
-                                <td>{{ bus.seat }}</td>
-                                <td><a href="{{ bus.picture }}" /></td>
-                                <td>{{ bus.created_at }}</td>
-                            </tr>
+                            {% for agen in agency %}
+                                {% if agen.id == bus.agency%}
+                                    <tr>
+                                        <td>{{ bus.number }}</td>
+                                        <td>{{ bus.type }}</td>
+                                        <td>{{ bus.seat }}</td>
+                                        <td><a href="{{ bus.picture }}" /></td>
+                                        <td>{{ bus.created_at }}</td>
+                                    </tr>
+                                {% endif %}
+                            {% endfor %}
                         {% endfor %}
                     </tbody>
                 </table>
