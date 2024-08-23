@@ -206,14 +206,10 @@ def bus(request):
 def trip(request):
     h = request.user.id
     agency = Agency.objects.get(user=h)
-    location = Location.objects.all()
-    buses = Bus.objects.filter(agency=agency.id)
-    trips = Trip.objects.all()
+    trips = Trip.objects.filter(agency=agency)  # Filter trips by agency
     context = {
         'agency': agency,
-        'location': location,
-        'bus': buses,
-        'trip': trips
+        'trips': trips,
     }
     return render(request, 'trip.html', context)
 

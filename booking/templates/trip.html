@@ -165,26 +165,21 @@
                         </tr>
                     </thead>
                     <tbody>
-                        {% for trips in trip %}
-                            {% for locations in location %}
-                                    {% if agency.id == trip.agency %}
-                                    {% if trip.location == locations.id %}
-                                        {% if trip.bus == bus.id %}
-                                            <tr>
-                                                <td>{{ locations.name }}</td>
-                                                <td>{{ locations.name }}</td>
-                                                <td>{{ trips.leave_at }}</td>
-                                                <td>{{ trips.arrive_at }}</td>
-                                                <td>{{ bus.number }}</td>
-                                                <td>{{ trips.amount }}</td>
-                                                <td>{{ trips.trip_date }}</td>
-                                                <td>{{ trips.created_at }}</td>
-                                            </tr>
-                                        {% endif %}
-                                    {% endif %}
-                                    {% endif %}
-                            {% endfor %}
-                        {% endfor %}
+                        {% for trip in trips %}
+    {% if trip.agency.id == agency.id %}
+        <tr>
+            <td>{{ trip.location_from.name }}</td>
+            <td>{{ trip.location_to.name }}</td>
+            <td>{{ trip.leave_time }}</td>
+            <td>{{ trip.arrival_time }}</td>
+            <td>{{ trip.bus.number }}</td>
+            <td>{{ trip.amount }}</td>
+            <td>{{ trip.trip_date }}</td>
+            <td>{{ trip.created_at }}</td>
+        </tr>
+    {% endif %}
+{% endfor %}
+
                     </tbody>
                 </table>
             </div>
