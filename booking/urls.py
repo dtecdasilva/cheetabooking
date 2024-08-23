@@ -25,7 +25,7 @@ urlpatterns = [
     path('process_qr_code/', process_qr_code_view, name='process_qr_code'),
     path('download-receipt/<str:unique_code>/', download_receipt, name='download_receipt'),
     path('register/', register_agency, name='register_agency'),
-    path('logout/', auth_views.LogoutView.as_view(), name='logout'),
+    path('logout/', auth_views.LogoutView.as_view(next_page='/index'), name='logout'),
 ]
 
 if settings.DEBUG:
