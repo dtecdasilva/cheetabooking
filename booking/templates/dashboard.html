@@ -116,13 +116,13 @@
                     </thead>
                     <tbody>
                         {% for book in books %}
+                            {% if trip.id == book.trip %}
                             <tr>
                                 <td>{{book.name}}</td>
                                 <td>{{book.number}}</td>
                                 <td>{{book.seat}}</td>
                                 <td>
                                     {% for trip in trips %}
-                                        {% if trip.id == book.trip %}
                                             {{ trip.trip_date }},
                                             {% for loc in location %}
                                                 {% if loc.id == trip.location_from %}
@@ -135,7 +135,7 @@
                                                 {% endif %}
                                             {% endfor %}
                                             {{ trip.leave_time }}
-                                        {% endif %}
+
                                     {% endfor %}
                                 </td>
                                 <td>{{book.idcn}}</td>
@@ -143,6 +143,7 @@
                                 <td>{{book.code}}</td>
                                 <td>{{book.created_at}}</td>
                             </tr>
+                            {% endif %}
                         {% endfor %}
 
                         <!-- Add more rows as needed -->
