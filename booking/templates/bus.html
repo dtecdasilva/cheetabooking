@@ -81,36 +81,48 @@
 
         <!-- Form to Add Bus -->
         <div class="card">
-            <div class="card-header">
-                <h4>Add New Bus</h4>
+    <div class="card-header">
+        <h4><button id="addBusBtn" class="btn btn-primary">Add New Bus</button></h4>
+    </div>
+    <div id="addBusForm" class="card-body" style="display: none;">
+        <form method="post" action="{% url 'addbus' %}">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="busPicture">Bus Picture</label>
+                <input type="text" class="form-control" id="" name="picture">
             </div>
-            <div class="card-body">
-                <form method="post" action="{% url 'addbus' %}">
-                    {% csrf_token %}
-                    <div class="form-group">
-                        <label for="busPicture">Bus Picture</label>
-                            <input type="text" class="form-control" id="" name="picture">
-                    </div>
-                    <div class="form-group">
-                        <label for="busNumber">Bus Number</label>
-                        <input type="text" class="form-control" id="busNumber" placeholder="Enter bus number" name="number">
-                        <input type="text" class="form-control" hidden id="" value="{{ agency.id }}" name="agency">
-                    </div>
-                    <div class="form-group">
-                        <label for="busType">Bus Type</label>
-                        <select class="form-control" id="busType" name="type">
-                            <option value="classic">Classic</option>
-                            <option value="vip">VIP</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="busSeats">Number of Seats</label>
-                        <input type="number" class="form-control" id="busSeats" placeholder="Enter number of seats" name="seats" min="1">
-                    </div>
-                    <button type="submit" class="btn btn-primary">Add Bus</button>
-                </form>
+            <div class="form-group">
+                <label for="busNumber">Bus Number</label>
+                <input type="text" class="form-control" id="busNumber" placeholder="Enter bus number" name="number">
+                <input type="text" class="form-control" hidden id="" value="{{ agency.id }}" name="agency">
             </div>
-        </div>
+            <div class="form-group">
+                <label for="busType">Bus Type</label>
+                <select class="form-control" id="busType" name="type">
+                    <option value="classic">Classic</option>
+                    <option value="vip">VIP</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="busSeats">Number of Seats</label>
+                <input type="number" class="form-control" id="busSeats" placeholder="Enter number of seats" name="seats" min="1">
+            </div>
+            <button type="submit" class="btn btn-primary">Add Bus</button>
+        </form>
+    </div>
+</div>
+
+<script>
+    document.getElementById('addBusBtn').addEventListener('click', function() {
+        var formDiv = document.getElementById('addBusForm');
+        if (formDiv.style.display === 'none' || formDiv.style.display === '') {
+            formDiv.style.display = 'block';
+        } else {
+            formDiv.style.display = 'none';
+        }
+    });
+</script>
+
 
         <!-- DataTable Card -->
         <div class="card">
