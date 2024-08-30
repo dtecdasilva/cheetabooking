@@ -10,7 +10,7 @@ admin.site.register(Bus, BusAdmin)
 
 
 class LocationAdmin(admin.ModelAdmin):
-    list_display = ('id', 'region', 'location', 'created_at')
+    list_display = ('id', 'region', 'location', 'image', 'description', 'created_at')
 
 
 admin.site.register(Location, LocationAdmin)

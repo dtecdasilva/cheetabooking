@@ -15,7 +15,10 @@ class Bus(models.Model):
 class Location(models.Model):
     region = models.CharField(max_length=255)
     location = models.CharField(max_length=255)
+    description = models.TextField(blank=True, null=True)  # Field for description
+    image = models.ImageField(upload_to='media/', blank=True, null=True)
     created_at = models.DateTimeField(default=datetime.now, blank=True)
+
 
 
 class Agency(models.Model):

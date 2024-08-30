@@ -1282,7 +1282,7 @@
 							<option>Select a seat</option>
 							{% for book in books %}
 								{% if book.trip == trip.id %}
-									<option class="booked" value="{{ book.seat }}" style="background-color: grey;" hidden>{{ book.seat }}</option>
+									<option class="booked" value="{{ book.seat }}" style="color: transparent;" hidden>{{ book.seat }}</option>
 								{% endif %}
 							{% endfor %}
 							{% for i in bus.seats|range_filter %}
@@ -1290,7 +1290,6 @@
 							{% endfor %}
 						</select>
                     {% endif %}
-                    <br>
                 {% endfor %}
 
 					<script>
