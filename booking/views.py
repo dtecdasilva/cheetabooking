@@ -236,6 +236,11 @@ def book(request):
                     trip[key] = datetime.fromisoformat(value)
                 except ValueError:
                     pass
+
+        if 'arrival_time' in trip and 'leave_time' in trip:
+            duration = (trip['arrival_time'] - trip['leave_time']).total_seconds() / 3600
+            trip['duration'] = duration
+
     buses = Bus.objects.all()
     agencies = Agency.objects.all()
     locations = Location.objects.all()
