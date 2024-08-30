@@ -243,13 +243,16 @@ def book(request):
                 trip['arrival_time'] = datetime.fromisoformat(trip['arrival_time'])
                 trip['leave_time'] = datetime.fromisoformat(trip['leave_time'])
 
-                # Calculate the duration in hours
-                duration = (trip['arrival_time'] - trip['leave_time']).total_seconds() / 3600
-                trip['duration'] = round(duration, 2)  # rounding to 2 decimal places for display
+                # Extract hours and calculate the difference
+                arrival_hour = trip['arrival_time'].hour
+                leave_hour = trip['leave_time'].hour
+                duration = arrival_hour - leave_hour
+
+                trip['duration'] = duration
 
             except (ValueError, KeyError, TypeError) as e:
                 # Handle cases where datetime conversion fails or keys are missing
-                trip['duration'] = 'Invalid date'  # or handle it in a way that makes sense for your application
+                trip['duration'] = 'Invalid date'
                 print(f"Error calculating duration for trip: {e}")
 
     buses = Bus.objects.all()
