@@ -1723,6 +1723,7 @@
 							class="elementor-section elementor-inner-section elementor-element elementor-element-6602a71 elementor-section-boxed elementor-section-height-default elementor-section-height-default"
 							data-id="6602a71" data-element_type="section">
 							<div class="elementor-container elementor-column-gap-default">
+                                {% for location in locations %}
 								<div class="elementor-column elementor-col-25 elementor-inner-column elementor-element elementor-element-8061474 elementor-invisible"
 									data-id="8061474" data-element_type="column"
 									data-settings="{&quot;animation&quot;:&quot;fadeInUp&quot;}">
@@ -1738,7 +1739,7 @@
 														<div class="elementor-cta__bg elementor-bg lazyload"
 															style="background-image:inherit;" role="img"
 															aria-label="Hindu temple in Bali"
-															data-bg-image="url(https://web.moxcreative.com/bigtranz/wp-content/uploads/sites/19/2023/03/hindu-temple-in-bali-e1679026582173.jpg)">
+															data-bg-image="url({{location.image}})">
 														</div>
 														<div class="elementor-cta__bg-overlay"></div>
 													</div>
@@ -1746,11 +1747,11 @@
 
 														<h2
 															class="elementor-cta__title elementor-cta__content-item elementor-content-item">
-															Bali, Indonesia </h2>
+                                                            {{location.region}}, {{ location.location }}</h2>
 
 														<div
 															class="elementor-cta__description elementor-cta__content-item elementor-content-item">
-															Lorem ipsum dolor sit amet consectetur adipiscing. </div>
+                                                            {{ location.description }}</div>
 
 														<div
 															class="elementor-cta__button-wrapper elementor-cta__content-item elementor-content-item ">
@@ -1764,123 +1765,8 @@
 										</div>
 									</div>
 								</div>
-								<div class="elementor-column elementor-col-25 elementor-inner-column elementor-element elementor-element-8a3a165 elementor-invisible"
-									data-id="8a3a165" data-element_type="column"
-									data-settings="{&quot;animation&quot;:&quot;fadeInUp&quot;,&quot;animation_delay&quot;:240}">
-									<div class="elementor-widget-wrap elementor-element-populated">
-										<div class="elementor-element elementor-element-ea86e28 elementor-cta--skin-cover elementor-cta--valign-bottom elementor-bg-transform elementor-bg-transform-zoom-in elementor-widget elementor-widget-call-to-action"
-											data-id="ea86e28" data-element_type="widget"
-											data-widget_type="call-to-action.default">
-											<div class="elementor-widget-container">
-												<div class="elementor-cta">
-													<div class="elementor-cta__bg-wrapper">
-														<div class="elementor-cta__bg elementor-bg lazyload"
-															style="background-image:inherit;" role="img"
-															aria-label="Day time shot of Golden Gate Bridge in San Francisco, California"
-															data-bg-image="url(https://web.moxcreative.com/bigtranz/wp-content/uploads/sites/19/2023/03/day-time-shot-of-golden-gate-bridge-in-san-francisco-california.jpg)">
-														</div>
-														<div class="elementor-cta__bg-overlay"></div>
-													</div>
-													<div class="elementor-cta__content">
+                                {% endfor %}
 
-														<h2
-															class="elementor-cta__title elementor-cta__content-item elementor-content-item">
-															San Francisco, US </h2>
-
-														<div
-															class="elementor-cta__description elementor-cta__content-item elementor-content-item">
-															Lorem ipsum dolor sit amet consectetur adipiscing. </div>
-
-														<div
-															class="elementor-cta__button-wrapper elementor-cta__content-item elementor-content-item ">
-															<a class="elementor-cta__button elementor-button elementor-size-xs"
-																href="#">
-																Book Destination </a>
-														</div>
-													</div>
-												</div>
-											</div>
-										</div>
-									</div>
-								</div>
-								<div class="elementor-column elementor-col-25 elementor-inner-column elementor-element elementor-element-5577d46 elementor-invisible"
-									data-id="5577d46" data-element_type="column"
-									data-settings="{&quot;animation&quot;:&quot;fadeInUp&quot;,&quot;animation_delay&quot;:480}">
-									<div class="elementor-widget-wrap elementor-element-populated">
-										<div class="elementor-element elementor-element-c417acf elementor-cta--skin-cover elementor-cta--valign-bottom elementor-bg-transform elementor-bg-transform-zoom-in elementor-widget elementor-widget-call-to-action"
-											data-id="c417acf" data-element_type="widget"
-											data-widget_type="call-to-action.default">
-											<div class="elementor-widget-container">
-												<div class="elementor-cta">
-													<div class="elementor-cta__bg-wrapper">
-														<div class="elementor-cta__bg elementor-bg lazyload"
-															style="background-image:inherit;" role="img"
-															aria-label="Eiffel tower from below with trees"
-															data-bg-image="url(https://web.moxcreative.com/bigtranz/wp-content/uploads/sites/19/2023/03/eiffel-tower-from-below-with-trees-e1679026604876.jpg)">
-														</div>
-														<div class="elementor-cta__bg-overlay"></div>
-													</div>
-													<div class="elementor-cta__content">
-
-														<h2
-															class="elementor-cta__title elementor-cta__content-item elementor-content-item">
-															Eiffel Tower, France </h2>
-
-														<div
-															class="elementor-cta__description elementor-cta__content-item elementor-content-item">
-															Lorem ipsum dolor sit amet consectetur adipiscing. </div>
-
-														<div
-															class="elementor-cta__button-wrapper elementor-cta__content-item elementor-content-item ">
-															<a class="elementor-cta__button elementor-button elementor-size-xs"
-																href="#">
-																Book Destination </a>
-														</div>
-													</div>
-												</div>
-											</div>
-										</div>
-									</div>
-								</div>
-								<div class="elementor-column elementor-col-25 elementor-inner-column elementor-element elementor-element-6b6757f elementor-invisible"
-									data-id="6b6757f" data-element_type="column"
-									data-settings="{&quot;animation&quot;:&quot;fadeInUp&quot;,&quot;animation_delay&quot;:720}">
-									<div class="elementor-widget-wrap elementor-element-populated">
-										<div class="elementor-element elementor-element-a3f64c1 elementor-cta--skin-cover elementor-cta--valign-bottom elementor-bg-transform elementor-bg-transform-zoom-in elementor-widget elementor-widget-call-to-action"
-											data-id="a3f64c1" data-element_type="widget"
-											data-widget_type="call-to-action.default">
-											<div class="elementor-widget-container">
-												<div class="elementor-cta">
-													<div class="elementor-cta__bg-wrapper">
-														<div class="elementor-cta__bg elementor-bg lazyload"
-															style="background-image:inherit;" role="img"
-															aria-label="Borobudur Temple in Java"
-															data-bg-image="url(https://web.moxcreative.com/bigtranz/wp-content/uploads/sites/19/2023/03/borobudur-temple-in-java-e1679026626878.jpg)">
-														</div>
-														<div class="elementor-cta__bg-overlay"></div>
-													</div>
-													<div class="elementor-cta__content">
-
-														<h2
-															class="elementor-cta__title elementor-cta__content-item elementor-content-item">
-															Borobudur, Indonesia </h2>
-
-														<div
-															class="elementor-cta__description elementor-cta__content-item elementor-content-item">
-															Lorem ipsum dolor sit amet consectetur adipiscing. </div>
-
-														<div
-															class="elementor-cta__button-wrapper elementor-cta__content-item elementor-content-item ">
-															<a class="elementor-cta__button elementor-button elementor-size-xs"
-																href="#">
-																Book Destination </a>
-														</div>
-													</div>
-												</div>
-											</div>
-										</div>
-									</div>
-								</div>
 							</div>
 						</section>
 					</div>
