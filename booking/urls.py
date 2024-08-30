@@ -26,7 +26,7 @@ urlpatterns = [
     path('download-receipt/<str:unique_code>/', download_receipt, name='download_receipt'),
     path('register/', register_agency, name='register_agency'),
     path('logout/', auth_views.LogoutView.as_view(next_page='/index'), name='logout'),
-]
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
