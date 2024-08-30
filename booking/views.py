@@ -238,8 +238,19 @@ def book(request):
                     pass
 
         if 'arrival_time' in trip and 'leave_time' in trip:
-            duration = (trip['arrival_time'] - trip['leave_time']).total_seconds() / 3600
-            trip['duration'] = duration
+            try:
+                # Convert string to datetime object if it's not already
+                trip['arrival_time'] = datetime.fromisoformat(trip['arrival_time'])
+                trip['leave_time'] = datetime.fromisoformat(trip['leave_time'])
+
+                # Calculate the duration in hours
+                duration = (trip['arrival_time'] - trip['leave_time']).total_seconds() / 3600
+                trip['duration'] = duration
+
+            except ValueError as e:
+                # Handle cases where the datetime conversion fails
+                trip['duration'] = None  # or handle it in a way that makes sense for your application
+                print(f"Error converting datetime: {e}")
 
     buses = Bus.objects.all()
     agencies = Agency.objects.all()
