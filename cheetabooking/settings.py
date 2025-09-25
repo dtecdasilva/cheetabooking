@@ -27,8 +27,10 @@ SECRET_KEY = 'django-insecure-pn1kge@!oe@-47j_csy+yv3-&2+&ksa9g8&pcf6u5pmszeonsi
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['mysterious-thicket-61490-bbdc5133fd6a.herokuapp.com', '127.0.0.1', 'cheetabooking.onrender.com', 'cheetabooking.speedwaysmokes.com']
-
+ALLOWED_HOSTS = [
+    'cheetabooking-1.onrender.com',   # Render temporary URL
+    'cheetabooking.speedwaysmokes.com',      # Your subdomain
+]
 
 # Application definition
 
@@ -84,15 +86,8 @@ WSGI_APPLICATION = 'cheetabooking.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'cheetabooking',      # Your database name
-        'USER': 'root',                  # Your MySQL username
-        'PASSWORD': '',
-        'HOST': '127.0.0.1',             # Or 'localhost'
-        'PORT': '3306',                  # Default MySQL port
-        'OPTIONS': {
-            'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
-        },
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / "db.sqlite3",
     }
 }
 
@@ -100,10 +95,6 @@ DATABASES = {
 # Ensure the ENGINE is set if it's not already provided
 if not DATABASES['default'].get('ENGINE'):
     DATABASES['default']['ENGINE'] = 'django.db.backends.postgresql'
-
-# Ensure the NAME is set if it's not already provided
-if 'NAME' not in DATABASES['default']:
-    DATABASES['default']['NAME'] = 'default_db'
 
 
 # Password validation
