@@ -367,16 +367,16 @@ def generate_pdf(leave_time, name, idcn, unique_code, seat, date_time, location_
     return file_path  # Return the file path instead of the file name
 
 
-def send_booking_email(leave_time, name, idcn, unique_code, seat, date_time, location_from, location_to, agency_name, agency_location, bus_number, bus_type, amount, recipient_email):
-    pdf_file_path = generate_pdf(leave_time, name, idcn, unique_code, seat, date_time, location_from, location_to, agency_name, agency_location, bus_number, bus_type, amount)
-
-    subject = 'Your Booking Receipt from Cheeta Booking'
-    body = f'Dear {name},\n\nThis is your booking receipt.\n\nThank you for choosing Cheeta Booking.'
-    email = EmailMessage(subject, body, to=[recipient_email])
-    with open(pdf_file_path, 'rb') as pdf_file:
-        email.attach(f'booking_{unique_code}.pdf', pdf_file.read(), 'application/pdf')
-
-    email.send()
+# def send_booking_email(leave_time, name, idcn, unique_code, seat, date_time, location_from, location_to, agency_name, agency_location, bus_number, bus_type, amount, recipient_email):
+#     pdf_file_path = generate_pdf(leave_time, name, idcn, unique_code, seat, date_time, location_from, location_to, agency_name, agency_location, bus_number, bus_type, amount)
+#
+#     subject = 'Your Booking Receipt from Cheeta Booking'
+#     body = f'Dear {name},\n\nThis is your booking receipt.\n\nThank you for choosing Cheeta Booking.'
+#     email = EmailMessage(subject, body, to=[recipient_email])
+#     with open(pdf_file_path, 'rb') as pdf_file:
+#         email.attach(f'booking_{unique_code}.pdf', pdf_file.read(), 'application/pdf')
+#
+#     email.send()
 
 
 def download_receipt(request, unique_code):
@@ -427,7 +427,7 @@ def booking(request):
         pdf_file_name = generate_pdf(leave_time, name, idcn, unique_code, seat, date_time, location_from, location_to, agency_name, agency_location, bus_number, bus_type, amount)
         pdf_url = f'{settings.MEDIA_URL}{pdf_file_name}'
 
-        send_booking_email(leave_time, name, idcn, unique_code, seat, date_time, location_from, location_to, agency_name,agency_location, bus_number, bus_type, amount, email)
+        # send_booking_email(leave_time, name, idcn, unique_code, seat, date_time, location_from, location_to, agency_name,agency_location, bus_number, bus_type, amount, email)
 
         url = '/book'
         params = urlencode({'download': pdf_url})
