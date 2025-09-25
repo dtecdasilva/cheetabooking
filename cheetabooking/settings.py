@@ -27,7 +27,7 @@ SECRET_KEY = 'django-insecure-pn1kge@!oe@-47j_csy+yv3-&2+&ksa9g8&pcf6u5pmszeonsi
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['mysterious-thicket-61490-bbdc5133fd6a.herokuapp.com', '127.0.0.1']
+ALLOWED_HOSTS = ['mysterious-thicket-61490-bbdc5133fd6a.herokuapp.com', '127.0.0.1', 'cheetabooking.onrender.com', 'cheetabooking.speedwaysmokes.com']
 
 
 # Application definition
@@ -79,9 +79,23 @@ WSGI_APPLICATION = 'cheetabooking.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
+# Database
+# https://docs.djangoproject.com/en/5.0/ref/settings/#databases
+
 DATABASES = {
-    'default': dj_database_url.config(conn_max_age=600, ssl_require=True)
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'cheetabooking',      # Your database name
+        'USER': 'root',                  # Your MySQL username
+        'PASSWORD': '',
+        'HOST': '127.0.0.1',             # Or 'localhost'
+        'PORT': '3306',                  # Default MySQL port
+        'OPTIONS': {
+            'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
+        },
+    }
 }
+
 
 # Ensure the ENGINE is set if it's not already provided
 if not DATABASES['default'].get('ENGINE'):
@@ -126,9 +140,15 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
-STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 STATIC_URL = '/static/'
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+# Folder where collectstatic will gather all static files
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')  # you can also call it 'static'
+
+# Additional locations where Django will look for static files
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'static'),  # your project-level static folder
+]
+# STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
